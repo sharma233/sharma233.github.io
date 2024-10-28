@@ -4,7 +4,7 @@ title:  "Restic"
 categories: restic markup
 ---
 
-# Problem
+## Problem
 
 For a while now, I haven't had a great backup solution and over the last couple of years, I've endeavored to solve that problem.
 As part of this journey, I set up a little LXC on my home server along with the avahi daemon over samba to get a networked time machine drive on my network 
@@ -15,9 +15,9 @@ and was really risking a lot of data that I value dearly if anything were to phy
 so this was really something I needed to persue to at least get one full backup in place.
 
 
-# Requirements and Decisions
+## Requirements and Decisions
 
-## Storage Provider
+# Storage Provider
 Like most folks out there, I am very very tired of all of my subscriptions, and so a huge requirement for me with setting this up was to not add on another costly subscription.
 Of course, I do understand the realities that storage does cost money, and any provider that I would use would charge me *something*. Therefore, my requirements for a provider were to find one that:
 - Was Cheap
@@ -29,7 +29,7 @@ The search with these goals in mind led me to the excellent cloud services provi
 and support just about every protocol imaginable (Samba, FTP, Rsync, RClone, Restic, etc.).
 
 
-## Backup Mechanism
+# Backup Mechanism
 Since I hadn't gone with a slick all-in-one backup provider like Crashplan or BackBlaze, I was now tasked with bringing my own backup mechanism to back my data up to my Hetzner box.
 For a backup mechanism, I wanted something that would:
 - Be able to detect changes between files since the last sync and only sync up the deltas
@@ -40,11 +40,11 @@ For a backup mechanism, I wanted something that would:
 These requirements led me to [Restic](https://restic.net/). Restic works amazingly well for my usecase because it allows you to create a repository, add files to that repository, and also push those backups remotely via one of the many protocols that Hetzner's storage boxes support. As a bonus, the repostories that are created are also encrypted by default when created.
 
 
-# Final Solution
+## Final Solution
 With both those decisions made, I finally wrote up a small shell script that just runs a couple of commands to adds any files that I care about to my restic repository and pushes the Restic repo up to my Hetzner storage box. I then added the shell script to my crontab so that it runs nightly and ensures that my offsite backups stay up to date. I have been using this solution now for a few months now and would strongly recommend it to anybody looking for a nice, simple offsite backup solution.
 
 
-# Other options
+## Other options
 I was of course, very tempted by Backblaze and Crashplan, as they seem to provide a really simple plug and play service, however was deterred by the cost. From the research I did though, I think I would recomend them to anybody less inclined to setting up their own backup solution.
 
 
