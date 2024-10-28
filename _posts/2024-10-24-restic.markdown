@@ -1,0 +1,51 @@
+---
+layout: post
+title:  "Restic"
+categories: restic markup
+---
+
+# Problem
+
+For a while now, I haven't had a great backup solution and over the last couple of years, I've endeavored to solve that problem.
+As part of this journey, I set up a little LXC on my home server along with the avahi daemon over samba to get a networked time machine drive on my network 
+(this solution might make for a good blog post one day!)
+
+This works relatively well for onsite backups but this blog post is about the next problem I faced, off site backups. I knew that I was taking a huge risk by not having any offsite backups
+and was really risking a lot of data that I value dearly if anything were to physically damage my home server. And as the old saying goes "one is none, and two is one" as far as backups go,
+so this was really something I needed to persue to at least get one full backup in place.
+
+
+# Requirements and Decisions
+
+## Storage Provider
+Like most folks out there, I am very very tired of all of my subscriptions, and so a huge requirement for me with setting this up was to not add on another costly subscription.
+Of course, I do understand the realities that storage does cost money, and any provider that I would use would charge me *something*. Therefore, my requirements for a provider were to find one that:
+- Was Cheap
+- Would not charge me if I did not actively use it
+
+
+The search with these goals in mind led me to the excellent cloud services provider [Hetzner](https://www.hetzner.com/). I went with their BX11 offering, which gives you
+1 TB of storage for a maximum charge of €3.81. They also have a ton of other features included within this offering such as automated snapshots that you can restore this service box from,
+and support just about every protocol imaginable (Samba, FTP, Rsync, RClone, Restic, etc.).
+
+
+## Backup Mechanism
+Since I hadn't gone with a slick all-in-one backup provider like Crashplan or BackBlaze, I was now tasked with bringing my own backup mechanism to back my data up to my Hetzner box.
+For a backup mechanism, I wanted something that would:
+- Be able to detect changes between files since the last sync and only sync up the deltas
+- Not require a lot of tinkering after set up. I really need this to be a *reliable* set it and forget it solution, and not require a lot of maintenance to keep running.
+- Some sort of built in encryption capabilities would be a huge bonus
+
+
+These requirements led me to [Restic](https://restic.net/). Restic works amazingly well for my usecase because it allows you to create a repository, add files to that repository, and also push those backups remotely via one of the many protocols that Hetzner's storage boxes support. As a bonus, the repostories that are created are also encrypted by default when created.
+
+
+# Final Solution
+With both those decisions made, I finally wrote up a small shell script that just runs a couple of commands to adds any files that I care about to my restic repository and pushes the Restic repo up to my Hetzner storage box. I then added the shell script to my crontab so that it runs nightly and ensures that my offsite backups stay up to date. I have been using this solution now for a few months now and would strongly recommend it to anybody looking for a nice, simple offsite backup solution.
+
+
+# Other options
+I was of course, very tempted by Backblaze and Crashplan, as they seem to provide a really simple plug and play service, however was deterred by the cost. From the research I did though, I think I would recomend them to anybody less inclined to setting up their own backup solution.
+
+
+There are also other storage providers beyond Hetzner that you can go with if you'd like to roll your own solution like I did here, such as AWS and Azure's cold storage options. I was personally dissuaded from using these due to their high cost if you might ever need to retrieve your backups.
