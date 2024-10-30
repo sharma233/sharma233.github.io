@@ -1,0 +1,59 @@
+---
+layout: post
+title:  "Ansible"
+categories: ansible homelab maintenance infrastructure-as-code
+---
+
+## Problem
+I have been running a home server for a few years now, and a problem I've come across is the maintenance of said server. Keeping your operating system and all services that you might be running (especially any that are exposed to the internet) is vital to keeping your network safe from attackers but it's also quite a tedious task.
+
+A typical upgrade cycle for me involves running a package manager upgrade command on the operating system level and then going in and pulling fresh docker images and restaring all the services that are currently active on my server, doing all this manually is a fair bit of effort and leads me to procrastinate on updating my system/services.
+
+
+## Requirements and Decisions
+Given the problem statement, my main goals with solving this are to find a solution that would be:
+- Scriptable
+- Automatable
+
+My search led me to a few solutions that utilize a concept known as Infrastructure as Code. There are a lot of solutions out there for this, but they all essentially boil down to utilizing some kind of markup format to specify your infrastructure, and also any scripts that need to be run on said infrastructure to then get everything up and running.
+
+I went with [Ansible](https://ansible.com) as it's FOSS (Free and Open Source) and also very admired within the "homelabbing" community.
+
+
+## Final Solution
+So far, I have set up a few scripts that all basically look like this snippet which shows off the script I use to update my Plex service:
+
+```
+---
+- name: update plex
+  hosts: ungrouped
+
+  tasks:
+    - name: stop
+      community.docker.docker_compose_v2:
+        project_src: "/home/surya/docker-apps/plex"
+        state: absent
+        remove_images: all
+      become: yes
+      become_user: root
+
+    - name: start
+      community.docker.docker_compose_v2:
+        project_src: "/home/surya/docker-apps/plex"
+        state: present
+        pull: always
+        recreate: always
+      become: yes
+      become_user: root
+```
+
+A few things to note here are:
+- I've used a community plugin to interact with docker, this is something I would strongly recommend as it keeps you away from directly typing in Docker commands, this is a much less brittle approach assuming that the plugin keeps up to date with all changes within the Docker ecosystem.
+- Being able to automatically clean up old images is a huge plus, this is done via the `remove_images: all` parameter withing the script. Old Docker images can eat up your storage and deleting them automatically with updates can help reclaim that storage space.
+- Ansible automatically knows which hosts to connect to to run these commands via the `hosts` parameter at the start of the file, these `hosts` are configured in a separate config file.
+
+I don't mean for this to be a whole tutorial for Ansible (especially since I myself am a beginner to the tool!) but this is a solution that works pretty well for me as of right now, although I'm always open to feedback and learning as I grow my skillset with the tool.
+
+
+## Future goals
+This project isn't quite done yet. I still need to automate these scripts, which requires for me to be able to provide the sudo password for the server without user input, as well as the password for my SSH key without user input. Since you never want to do this via any mechamisn that stores data in plain text, it requires understanding of the Ansible Vault feature, which I still need to dig into. So that is the next thing I plan to accomplish with this project and also schedule these scripts to run automatically on a schedule so I can be completely hands off with my server maintenance. However, as of right now, this has still been a huge boost to the efficiency with which I can update my home server!
