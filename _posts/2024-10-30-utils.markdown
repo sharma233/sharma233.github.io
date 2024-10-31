@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Utils - Work on Small Projects!"
-categories: programming rust
+categories: programming
 ---
 
 Recently, I've found that I really struggled to work on side projects. After spending some time examining this reluctance to start working on anything, I found that it was largely because I kept coming up with side project ideas that were too **big**. 
