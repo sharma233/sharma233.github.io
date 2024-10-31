@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Ansible"
-categories: ansible homelab maintenance infrastructure-as-code
+categories: homelab
 ---
 
 ## Problem
