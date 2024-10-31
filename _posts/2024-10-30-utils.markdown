@@ -4,10 +4,16 @@ title:  "Utils - Work on Small Projects!"
 categories: programming rust
 ---
 
-Recently, I've found that I really struggled to work on side projects. After spending some time examining this reluctance to start working on anything, I found that it was largely because I kept coming up with side project ideas that were too **big**. I was constantly coming up with these big projects that would take months/years to even get a simple MVP up and running and this was leading to me not even starting on them. Now, that is not to say that these big projects are not worth pursuing, I've actually jotted many of them down in a notebook so I still remember them when I feel like I'm in a space to tackle something big. However, for the mindspace that I was in, especially while trying to learn a new language, I needed to chase smaller things.
+Recently, I've found that I really struggled to work on side projects. After spending some time examining this reluctance to start working on anything, I found that it was largely because I kept coming up with side project ideas that were too **big**. 
 
 
-By shifting this mindset is how I came up with a couple of utilities that I wanted to build for myself. These are just simple command line utilities (like a pomodoro timer) that ended up challenging me with some unexpected complexity and yet the goals of the programs were simple enough to accomplish in an afternoon or two. I find myself using these little utils all the time since I *actually* wanted them to exist, I really didn't spend any time wondering how other people would want to use them because I literally just built them for myself and gained the satisfaction of actually *finishing* something.
+All of these project ideas were so big that they would take months/years to even get a simple MVP up and running and this was leading to me not even starting on them due to being overwhelmed. Now, that is not to say that these big projects are not worth pursuing, I've actually jotted many of them down in a notebook so I still remember them when I feel like I'm in a space to tackle something big. However, for the mindspace that I was in, especially while trying to learn a new language, I needed to chase smaller things.
 
 
-So if there's a piece of advice that I could impart on to devs it's that build small tools that you actually want to use!
+By shifting this mindset is how I came up with a couple of utilities that I wanted to build for myself. These have just been some simple command line utilities (like a pomodoro timer) that ended up challenging me with some unexpected complexity and yet the goals of the programs were simple enough to accomplish in an afternoon or two. 
+
+
+As a bonus, I find myself using these little utils all the time since I *actually* wanted them to exist, I really didn't spend any time wondering how other people would want to use them because I literally just built them for myself and gained the satisfaction of actually *finishing* something.
+
+
+So if there's a piece of advice that I could impart on to devs it's that they should spend some of their time just building small tools that they actually want to use!
